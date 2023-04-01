@@ -7,7 +7,7 @@ export default function LoginPage({ navigation }) {
   const [password, setPassword] = React.useState('');
 
   const handleLogin = () => {
-    // Handle login logic here
+    // teste_comentario
     // Example: validate email and password, then navigate to UsersListPage
     navigation.navigate('Lista');
   };
