@@ -10,8 +10,7 @@ export default function SignupPage({ navigation }) {
   const [password, setPassword] = React.useState('');
 
   const handleSignup = () => {
-    // Handle signup logic here
-    // Example: create a new user, then navigate to UsersListPage
+    // Código criado para atividade de Nilson
     navigation.navigate('UsersList');
   };
 

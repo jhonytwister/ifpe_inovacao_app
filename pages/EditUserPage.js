@@ -8,8 +8,7 @@ export default function EditUserPage({ route, navigation }) {
   const [user, setUser] = React.useState(route.params.user);
 
   const handleSaveUser = () => {
-    // Handle save user logic here
-    // Example: update user in database or local storage
+    // Código criado para atividade de Nilson
     navigation.goBack();
   };
 

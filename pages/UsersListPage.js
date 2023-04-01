@@ -11,8 +11,7 @@ export default function UserListPage({ navigation }) {
   ]);
 
   const handleEditUser = (user) => {
-    // Handle edit user logic here
-    // Example: navigate to EditUserPage with user data
+    // Código criado para atividade de Nilson
     navigation.navigate('EditUser', { user });
   };
 
