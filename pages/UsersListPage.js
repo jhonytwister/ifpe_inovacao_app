@@ -1,24 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Header } from 'react-native-elements';
 import { Icon } from 'react-native-elements';
+import { useIsFocused } from '@react-navigation/native';
+import axios from 'axios';
 
 export default function UserListPage({ navigation }) {
-  const [users, setUsers] = React.useState([
-    { id: 1, firstName: 'John', lastName: 'Doe', email: 'johndoe@example.com', password: '123456' },
-    { id: 2, firstName: 'Jane', lastName: 'Doe', email: 'janedoe@example.com', password: '123456' },
-    { id: 3, firstName: 'Bob', lastName: 'Smith', email: 'bobsmith@example.com', password: '123456' },
-  ]);
+  const [users, setUsers] = useState([]);
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    axios.get('https://644c548917e2663b9d049ecb.mockapi.io/cliente/')
+      .then(response => {
+        const data = response.data;
+        const mappedData = data.map(item => ({
+          nome: item.nome,
+          cpf: item.cpf,
+          email: item.email,
+          telefone: item.telefone,
+          id: item.id,
+        }));
+        setUsers(mappedData);
+      })
+      .catch(error => console.log(error));
+  }, [isFocused]);
 
   const handleEditUser = (user) => {
-    // Código criado para atividade de Nilson
     navigation.navigate('EditUser', { user });
   };
 
   const renderUser = ({ item }) => (
     <TouchableOpacity onPress={() => handleEditUser(item)} style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
-      <Text>{item.firstName} {item.lastName}</Text>
-      <Text style={{ color: '#777' }}>{item.email}</Text>
+      <Text>{item.nome}</Text>
+      <Text>{item.cpf}</Text>
+      <Text>{item.email}</Text>
+      <Text>{item.telefone}</Text>
+      <Text>{item.id}</Text>
     </TouchableOpacity>
   );
 
@@ -30,10 +47,9 @@ export default function UserListPage({ navigation }) {
         rightComponent={<Icon name="home" type="feather" color="#fff" onPress={() => navigation.navigate('LoginPage')} />}
       />
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>User List Page</Text>
         <FlatList
           data={users}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={item => item.nome}
           renderItem={renderUser}
           style={{ width: '100%' }}
         />
