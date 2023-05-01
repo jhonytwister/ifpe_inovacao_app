@@ -42,7 +42,7 @@ export default function LoginPage({ navigation }) {
           <Text style={{ color: '#fff', textAlign: 'center' }}>Login</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Signup')} style={{ padding: 8, marginVertical: 8 }}>
-          <Text>Não tem uma conta? Inscreva-se</Text>
+          <Text>Não tem uma conta? Inscreva-se agora</Text>
         </TouchableOpacity>
       </View>
     </View>
