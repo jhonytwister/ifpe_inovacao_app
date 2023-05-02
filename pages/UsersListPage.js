@@ -4,6 +4,7 @@ import { Header } from 'react-native-elements';
 import { Icon } from 'react-native-elements';
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
+import { getAuth, signOut } from 'firebase/auth';
 
 export default function UserListPage({ navigation }) {
   const [users, setUsers] = useState([]);
@@ -29,6 +30,16 @@ export default function UserListPage({ navigation }) {
     navigation.navigate('EditUser', { user });
   };
 
+  const handleLogout = async () => {
+    try {
+      const auth = getAuth();
+      await signOut(auth);
+      navigation.navigate('LoginPage');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const renderUser = ({ item }) => (
     <TouchableOpacity onPress={() => handleEditUser(item)} style={{ padding: 16, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
       <Text>{item.nome}</Text>
@@ -44,7 +55,7 @@ export default function UserListPage({ navigation }) {
       <Header
         leftComponent={<Icon name="arrow-left" type="feather" color="#fff" onPress={() => navigation.goBack()} />}
         centerComponent={{ text: 'LISTA DE USUÁRIOS', style: { color: '#fff' } }}
-        rightComponent={<Icon name="home" type="feather" color="#fff" onPress={() => navigation.navigate('LoginPage')} />}
+        rightComponent={<Icon name="log-out" type="feather" color="#fff" onPress={handleLogout} />}
       />
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <FlatList

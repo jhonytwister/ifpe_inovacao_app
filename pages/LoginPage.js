@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { Header } from 'react-native-elements';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { Header, Button } from 'react-native-elements';
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 export default function LoginPage({ navigation }) {
   const [email, setEmail] = React.useState('');
@@ -11,7 +11,6 @@ export default function LoginPage({ navigation }) {
     try {
       const auth = getAuth();
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      // Autenticação bem sucedida, redireciona o usuário para a página de lista
       navigation.navigate('UserList');
     } catch (error) {
       console.error(error);
@@ -19,10 +18,22 @@ export default function LoginPage({ navigation }) {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      const auth = getAuth();
+      await signOut(auth);
+      navigation.navigate('Login');
+    } catch (error) {
+      console.error(error);
+      alert('Não foi possível fazer logout!');
+    }
+  };
+
   return (
     <View>
       <Header
         centerComponent={{ text: 'PÁGINA DE LOGIN', style: { color: '#fff' } }}
+        rightComponent={<Button title="Logout" onPress={handleLogout} />}
       />
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <TextInput
